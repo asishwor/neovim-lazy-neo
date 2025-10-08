@@ -1,6 +1,39 @@
-# 🚀 Beautiful Neovim + Fish Shell Setup Complete!
+# 🚀 Beautiful Neovim + LazyVim + Fish Shell Configuration
 
-Congratulations! Your modern development environment has been successfully configured with beautiful themes and modern features.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Neovim](https://img.shields.io/badge/Neovim-0.9+-green.svg)](https://neovim.io/)
+[![LazyVim](https://img.shields.io/badge/LazyVim-Latest-blue.svg)](https://lazyvim.org/)
+
+A modern, beautiful, and feature-rich Neovim configuration with LazyVim, Fish shell, and Starship prompt. This setup provides a complete development environment with stunning visuals and powerful functionality.
+
+![Preview](https://via.placeholder.com/800x400/1e1e2e/cdd6f4?text=Beautiful+Neovim+Setup)
+
+## ⚡ Quick Installation
+
+```bash
+git clone git@github.com:asishwor/neovim-lazy-neo.git
+cd neovim-lazy-neo
+./install.sh
+```
+
+## 📁 Repository Structure
+
+```
+neovim-lazy-neo/
+├── nvim/                   # Neovim configuration
+│   ├── lua/
+│   │   ├── config/         # LazyVim base configuration
+│   │   └── plugins/        # Custom plugin configurations
+│   │       ├── colorscheme.lua  # Catppuccin theme setup
+│   │       ├── ui.lua          # UI enhancements
+│   │       └── development.lua # Development tools
+│   └── init.lua           # Main configuration entry point
+├── fish/                   # Fish shell configuration
+│   └── config.fish        # Fish shell settings and aliases
+├── starship.toml          # Starship prompt configuration
+├── install.sh             # Automated installation script
+└── README.md              # This file
+```
 
 ## 📦 What's Installed
 

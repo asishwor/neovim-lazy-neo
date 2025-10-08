@@ -1,33 +1,21 @@
 #!/bin/bash
 
-# Neovim + LazyVim + Fish Shell Setup Script
-# Modern development environment with beautiful themes
+# Neovim + LazyVim + Fish Shell Setup Script - macOS Optimized
+# Modern development environment with beautiful themes for macOS
 
 set -e
 
-echo "🚀 Installing Beautiful Neovim + LazyVim + Fish Shell Setup"
-echo "=========================================================="
+echo "🍎 Installing Beautiful Neovim + LazyVim + Fish Shell Setup for macOS"
+echo "=================================================================="
 
-# Detect OS
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    if command -v dnf &> /dev/null; then
-        OS="fedora"
-    elif command -v apt &> /dev/null; then
-        OS="ubuntu"
-    elif command -v pacman &> /dev/null; then
-        OS="arch"
-    else
-        echo "❌ Unsupported Linux distribution"
-        exit 1
-    fi
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    OS="macos"
-else
-    echo "❌ Unsupported operating system"
+# Check if we're on macOS
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    echo "❌ This script is designed for macOS only"
+    echo "💡 Use ./install.sh for other platforms"
     exit 1
 fi
 
-echo "✅ Detected OS: $OS"
+echo "✅ macOS detected"
 
 # Check if Xcode Command Line Tools are installed
 check_xcode_tools() {
@@ -59,63 +47,22 @@ install_homebrew() {
     fi
 }
 
-# Install dependencies based on OS
+# Install dependencies using Homebrew
 install_dependencies() {
-    echo "📦 Installing dependencies..."
+    echo "📦 Installing dependencies with Homebrew..."
     
-    case $OS in
-        fedora)
-            sudo dnf install -y neovim fish ripgrep fd-find python3-pip curl git nodejs npm unzip
-            ;;
-        ubuntu)
-            sudo apt update
-            sudo apt install -y neovim fish ripgrep fd-find python3-pip curl git nodejs npm unzip
-            ;;
-        arch)
-            sudo pacman -S --noconfirm neovim fish ripgrep fd python-pip curl git nodejs npm unzip
-            ;;
-        macos)
-            install_homebrew
-            echo "📦 Installing dependencies with Homebrew..."
+    # Core dependencies
+    brew install neovim fish ripgrep fd python3 curl git node npm
     
-            # Core dependencies
-            brew install neovim fish ripgrep fd python3 curl git node npm
-            
-            # Additional tools for better development experience
-            brew install --cask font-jetbrains-mono-nerd-font 2>/dev/null || {
-                echo "📝 Note: Font installation requires manual approval in System Preferences"
-                echo "📝 Installing font manually..."
-                install_font_manual
-            }
-            
-            # Optional but recommended tools
-            brew install lazygit tree bat exa htop
-            ;;
-    esac
-}
-
-# Install Starship prompt
-install_starship() {
-    echo "⭐ Installing Starship prompt..."
-    curl -sS https://starship.rs/install.sh | sh -s -- --yes
-}
-
-# Install JetBrains Mono Nerd Font
-install_font() {
-    echo "🔤 Installing JetBrains Mono Nerd Font..."
-    
-    if [[ "$OS" == "macos" ]]; then
-        # On macOS, we try to install via Homebrew first (in install_dependencies)
-        # This function is called as a fallback.
+    # Additional tools for better development experience
+    brew install --cask font-jetbrains-mono-nerd-font 2>/dev/null || {
+        echo "📝 Note: Font installation requires manual approval in System Preferences"
+        echo "📝 Installing font manually..."
         install_font_manual
-    else
-        FONT_DIR="$HOME/.local/share/fonts"
-        mkdir -p "$FONT_DIR"
-        curl -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/JetBrainsMono.zip -o /tmp/JetBrainsMono.zip
-        unzip -o /tmp/JetBrainsMono.zip -d "$FONT_DIR"
-        rm /tmp/JetBrainsMono.zip
-        fc-cache -fv
-    fi
+    }
+    
+    # Optional but recommended tools
+    brew install lazygit tree bat exa htop
 }
 
 # Manual font installation for macOS
@@ -135,6 +82,12 @@ install_font_manual() {
     echo "💡 You may need to restart applications to see the new font"
 }
 
+# Install Starship prompt
+install_starship() {
+    echo "⭐ Installing Starship prompt..."
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+}
+
 # Backup existing configurations
 backup_configs() {
     echo "💾 Backing up existing configurations..."
@@ -152,12 +105,13 @@ backup_configs() {
     fi
     
     if [[ -f "$HOME/.config/fish/config.fish" ]]; then
+        mkdir -p "$HOME/.config/fish"
         mv "$HOME/.config/fish/config.fish" "$HOME/.config/fish/config.fish.backup.$TIMESTAMP"
         echo "   Backed up Fish config to ~/.config/fish/config.fish.backup.$TIMESTAMP"
     fi
 }
 
-# Install configurations
+# Install configurations with macOS-specific adjustments
 install_configs() {
     echo "⚙️  Installing configurations..."
     
@@ -169,10 +123,9 @@ install_configs() {
     cp -r nvim/* "$HOME/.config/nvim/"
     cp fish/config.fish "$HOME/.config/fish/"
     cp starship.toml "$HOME/.config/"
-
-    if [[ "$OS" == "macos" ]]; then
-        # macOS-specific Fish configuration adjustments
-        cat >> "$HOME/.config/fish/config.fish" << 'EOF'
+    
+    # macOS-specific Fish configuration adjustments
+    cat >> "$HOME/.config/fish/config.fish" << 'EOF'
 
 # macOS-specific configurations
 if test (uname) = "Darwin"
@@ -205,10 +158,9 @@ if test (uname) = "Darwin"
     end
 end
 EOF
-    fi
     
     echo "   Installed Neovim configuration"
-    echo "   Installed Fish configuration"
+    echo "   Installed Fish configuration with macOS optimizations" 
     echo "   Installed Starship configuration"
 }
 
@@ -337,7 +289,6 @@ echo "📋 macOS Demo Commands:"
 echo "# Open Swift demo file"
 echo "nvim /tmp/demo-macos.swift"
 echo
-
 echo "🛠️ macOS Development Commands:"
 echo "• 'o .' - Open current directory in Finder"
 echo "• 'pbcopy < file.txt' - Copy file to clipboard"
@@ -366,7 +317,7 @@ EOF
 # Main installation function
 main() {
     echo
-    read -p "Do you want to proceed with the installation? (y/N): " -n 1 -r
+    read -p "Do you want to proceed with the macOS installation? (y/N): " -n 1 -r
     echo
     
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -375,44 +326,37 @@ main() {
     fi
     
     echo
-    echo "Starting installation..."
+    echo "Starting macOS installation..."
     echo
     
-    if [[ "$OS" == "macos" ]]; then
-        check_xcode_tools
-    fi
-    
+    check_xcode_tools
+    install_homebrew
     install_dependencies
     install_starship
-    if [[ "$OS" != "macos" ]]; then
-        install_font
-    fi
     backup_configs
     install_configs
     setup_fish
     setup_neovim
-    
-    if [[ "$OS" == "macos" ]]; then
-        create_macos_demo
-        suggest_terminal_setup
-    fi
+    create_macos_demo
+    suggest_terminal_setup
     
     echo
-    echo "🎉 Installation completed successfully!"
+    echo "🎉 macOS installation completed successfully!"
     echo
     echo "📋 Next steps:"
-    echo "1. Set your terminal font to 'JetBrains Mono Nerd Font'"
+    echo "1. Set your terminal font to 'JetBrainsMono Nerd Font'"
     echo "2. Restart your terminal or run 'exec fish'"
     echo "3. Launch Neovim with 'nvim' to see the beautiful setup"
-    
-    if [[ "$OS" == "macos" ]]; then
-        echo "4. Try the macOS demo: './demo-macos.sh'"
-    fi
-    
+    echo "4. Try the macOS demo: './demo-macos.sh'"
+    echo
+    echo "💡 Pro Tips for macOS:"
+    echo "• Use iTerm2 for the best terminal experience"
+    echo "• Install Homebrew packages for development tools"
+    echo "• Use 'o .' to open current directory in Finder"
     echo
     echo "📚 For more information, check the README.md file"
     echo
-    echo "Happy coding! ✨"
+    echo "Happy coding on macOS! 🍎✨"
 }
 
 main "$@"

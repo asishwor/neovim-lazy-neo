@@ -1,0 +1,158 @@
+# Starship configuration for modern terminal experience
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[➜](bold red)'
+
+# Show current directory
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = false
+
+# Git configuration
+[git_branch]
+symbol = "🌱 "
+truncation_length = 4
+truncation_symbol = ""
+style = "bold purple"
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = "🏷 "
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+up_to_date = "✓"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+# Language and tool configurations
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[python]
+symbol = "🐍 "
+pyenv_version_name = true
+style = "bold yellow"
+
+[rust]
+symbol = "🦀 "
+style = "bold red"
+
+[golang]
+symbol = "🐹 "
+style = "bold cyan"
+
+[java]
+symbol = "☕ "
+style = "bold red"
+
+[php]
+symbol = "🐘 "
+style = "157"
+
+[docker_context]
+symbol = "🐳 "
+style = "blue bold"
+
+[kubernetes]
+symbol = "☸ "
+style = "cyan bold"
+disabled = false
+
+# Package version
+[package]
+symbol = "📦 "
+style = "208"
+
+# Time configuration
+[time]
+disabled = false
+format = '🕙[\[ $time \]]($style) '
+time_format = "%T"
+style = "bright-white"
+
+# Battery configuration
+[battery]
+full_symbol = "🔋"
+charging_symbol = "⚡"
+discharging_symbol = "💀"
+
+[[battery.display]]
+threshold = 15
+style = "bold red"
+
+[[battery.display]]
+threshold = 50
+style = "bold yellow"
+
+# Memory usage
+[memory_usage]
+disabled = false
+threshold = -1
+symbol = "🐏"
+style = "bold dimmed green"
+
+# Command duration
+[cmd_duration]
+min_time = 2_000
+show_milliseconds = false
+format = "took [$duration](bold yellow)"
+
+# Username
+[username]
+style_user = "white bold"
+style_root = "black bold"
+format = "[$user]($style) "
+disabled = false
+show_always = true
+
+# Hostname
+[hostname]
+ssh_only = false
+format = 'on [$hostname](bold red) '
+trim_at = "."
+disabled = false
+
+# Custom prompt order
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$git_metrics\
+$fill\
+$nodejs\
+$python\
+$rust\
+$golang\
+$java\
+$php\
+$docker_context\
+$kubernetes\
+$package\
+$cmd_duration\
+$line_break\
+$character"""

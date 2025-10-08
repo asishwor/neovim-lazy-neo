@@ -1,0 +1,35 @@
+# Neovim runtime files
+.netrwhist
+*~
+
+# Swap files
+*.swp
+*.swo
+
+# Session files
+Session.vim
+
+# Temporary files
+*.tmp
+
+# Auto-generated tag files
+tags
+
+# Neovim plugin data (these should be generated on install)
+nvim/.netrwhist
+nvim/plugin/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# LazyVim data that should be auto-generated
+lazy-lock.json
